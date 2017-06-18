@@ -55,7 +55,7 @@ function clickImport(url)
 			var flag=false;
 			for(var i=0;i<list;i++)
 			{
-				if(data[i].name===".gitignore")
+				if(data[i].name==="package.json")
 				{
 					flag=true;
 					getDependencies(data[i].download_url);
