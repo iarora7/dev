@@ -25,8 +25,10 @@ function search(s)
     			var btn = document.createElement("button");
     			btn.innerHTML = 'Import ' + i;
     			btn.setAttribute("id", 'btn'+i)
-    			// btn.setAttribute("onclick", clickImport(contents_url));
-				btn.onclick = clickImport(contents_url);
+				btn.addEventListener("click", function(event){
+    			console.log("clicked");
+    			event.preventDefault();
+    		});
     			output.appendChild(gitRepo);
 				output.appendChild(btn);
     		}
@@ -37,6 +39,7 @@ function search(s)
 		}
 	})
 }
+
 
 function clickImport(url)
 {
