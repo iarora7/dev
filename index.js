@@ -26,7 +26,7 @@ function search(s)
     			btn.innerHTML = 'Import ' + i;
     			btn.setAttribute("id", 'btn'+i)
 				btn.addEventListener("click", function(event){
-    			console.log("clicked");
+    			clickImport(contents_url);
     			event.preventDefault();
     		});
     			output.appendChild(gitRepo);
@@ -43,28 +43,28 @@ function search(s)
 
 function clickImport(url)
 {
-	console.log("clicked");
+	// console.log("clicked with url: " + url);
 	url=url.substring(0,url.length-7);
 	$.ajax({
 		url: url,
 		type:"GET",
 		contentType:"application/json",
 		success: function(data) {
-			// console.log("after clicking import" + url);
-			// var list=data.length;
-			// var flag=false;
-			// for(var i=0;i<list;i++)
-			// {
-			// 	if(data[i].name==="package.json")
-			// 	{
-			// 		flag=true;
-			// 		getDependencies(data[i].download_url);
-			// 	}
-			// }
-			// if(!flag)
-			// 	console.log("This project does not contain a valid package.json file");
-			// else
-			// 	console.log("Packages tracked");
+			// console.log("after clicking import " + url);
+			var list=data.length;
+			var flag=false;
+			for(var i=0;i<list;i++)
+			{
+				if(data[i].name===".gitignore")
+				{
+					flag=true;
+					getDependencies(data[i].download_url);
+				}
+			}
+			if(!flag)
+				console.log("This project does not contain a valid package.json file");
+			else
+				console.log("Packages tracked");
 		},
 		error: function(data, e1, e2) {
 		console.log(" message error")
@@ -78,11 +78,13 @@ function getDependencies(url)
 	$.ajax({
 		url: url,
 		type:"GET",
-		contentType:"application/json",    
 		success: function(data) {
+			data = data.split("\n");
+			
 
 			for(var i=0;i<data.length;i++)
-				topPackages.add(data['dependencies'][i]);
+				console.log(i + ": " + data[i]);
+				topPackages.add(data[i]);
 		},
 		error: function(data, e1, e2) {
 		console.log(" message error")
