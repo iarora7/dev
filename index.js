@@ -1,4 +1,4 @@
-let topPackages = new Set();
+var topPackages = new Set();
 function search(s)
 {
 		var output = document.getElementById('gitList');
@@ -55,8 +55,9 @@ function clickImport(url)
 			var flag=false;
 			for(var i=0;i<list;i++)
 			{
-				if(data[i].name==="package.json")
+				if(data[i].name===".gitignore")
 				{
+
 					flag=true;
 					getDependencies(data[i].download_url);
 				}
@@ -80,20 +81,41 @@ function getDependencies(url)
 		type:"GET",
 		success: function(data) {
 			data = data.split("\n");
-			
-
+			console.log(data.length);
 			for(var i=0;i<data.length;i++)
+			{
 				console.log(i + ": " + data[i]);
 				topPackages.add(data[i]);
+			}
+			helper(topPackages);
 		},
 		error: function(data, e1, e2) {
 		console.log(" message error")
-
 		}
 	})
 }
 
+function helper(req)
+{
+	console.log("inside helper");
+	console.log(req);
+	topPackages=req;
+}
+var cnt=0;
 function goTop()
 {
-	window.location="topPackages.html?"+topPackages;
+	helper(topPackages);
+	console.log("tops");
+	console.log(topPackages);
+	
+	//document.getElementById("dispTop").innerHTML="check";
+	//window.location="topPackages.html?";
+	for (var it = topPackages.values() , val= null; val=it.next().value; ) {
+		if(cnt<10){
+    		document.getElementById("dispTop").innerHTML+=val;
+    		cnt++;
+		}
+}
+	
+
 }

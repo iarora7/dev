@@ -1,24 +1,12 @@
 <html>
 <head>
-<script>
-// token=decodeURIComponent(arr[0].split('=')[1]);
-
-function getTop(){
-	for(var t=0;t<10;t++)
-	{
-		var t1=document.createElement("p");
-		t1.innerText=topPackages[t];
-		//display top 10 packages in the new html page
-	}
-}
-</script>
+      <script type="text/javascript" src="index.js"></script>
 </head>
 <body>
 <h4>Top 10 packages</h4>
+
 <input type="text" id="top" name="top" placeholder="Enter the keyword">
  <button type="button" onclick="search(document.getElementById('top'))">Search</button>
  <br>
- <div id="dispTop">
- </div>
 </body>
 </html>
