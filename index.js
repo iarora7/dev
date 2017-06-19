@@ -66,15 +66,24 @@ function search(s)
     				+ " " + data['items'][i].contents_url;
     				// + " " + '<button id="but' + i +'" onclick="clickImport(contents_url)"> Import </button>';
     			*/
-    			var btn = document.createElement("button");
+    			/*var btn = document.createElement("button");
     			btn.innerHTML = 'Import';
-    			btn.value = contents_url;
     			btn.setAttribute("id", 'btn'+i);
-				btn.addEventListener("click", function(event){
-    			clickImport(btn.value);
+                btn.addEventListener("click", function(event){
+    			clickImport(contents_url);
     			event.preventDefault();
-    		});
-                td4.appendChild(btn);
+    		});*/
+                var card = document.createElement("input");
+                card.type = "button";
+                card.value = "Import";
+                card.onclick = (function(contents_url) {
+                    /*console.log(card.value);
+                    clickImport(contents_url);*/
+                    return function () {
+                        clickImport(contents_url);
+                    }
+                })(contents_url);
+                td4.appendChild(card);
                 tr.appendChild(td1);
                 tr.appendChild(td2);
                 tr.appendChild(td3);
