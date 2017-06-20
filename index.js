@@ -155,39 +155,43 @@ function getDependencies(url)
 	$.ajax({
 		url: url,
 		type:"GET",
-        contentType:"application/json",
 		success: function(data) {
-			// data = data.split("\n");
-            var dep = data.dependencies;
-            var depSize = dep.length;
-            console.log(depSize);
-            var devDep = data.devDependencies;
-            var devDepSize = devDep.length;
-			console.log(devDepSize);
-			/*for(var i=0;i<depSize;i++)
-			{
-				console.log(i + ": " + data[i]);
-				topPackages.add(data[i]);
-			}*/
-			for(var name in dep)
+            var jsonData = JSON.parse(data);
+            console.log(jsonData);
+            // Adding Dependencies to the list
+            var dep = jsonData.dependencies;
+            if(typeof dep !== "undefined")
             {
-                if(name in packageMap) {
-                    packageMap[name] = packageMap[name] + 1;
-                }
-                else{
-                    packageMap[name] = 1;
+                console.log(dep);
+                var depSize = dep.length;
+                console.log(depSize);
+                for(var name in dep)
+                {
+                    if(name in packageMap) {
+                        packageMap[name] = packageMap[name] + 1;
+                    }
+                    else{
+                        packageMap[name] = 1;
+                    }
                 }
             }
-            for(var name in devDep)
+            // Adding Dev-Dependencies to the list
+            var devDep = jsonData.devDependencies;
+            if(typeof devDep !== "undefined")
             {
-                if(name in packageMap) {
-                    packageMap[name] = packageMap[name] + 1;
-                }
-                else{
-                    packageMap[name] = 1;
+                console.log(devDep);
+                var devDepSize = devDep.length;
+                console.log(devDepSize);
+                for(var name in devDep)
+                {
+                    if(name in packageMap) {
+                        packageMap[name] = packageMap[name] + 1;
+                    }
+                    else{
+                        packageMap[name] = 1;
+                    }
                 }
             }
-			// helper(topPackages);
             console.log(packageMap);
 		},
 		error: function(data, e1, e2) {
@@ -203,9 +207,9 @@ function helper(req)
 	topPackages=req;
 }
 var cnt=0;
-function goTop()
+function getTopPackages()
 {
-	helper(topPackages);
+	/*helper(topPackages);
 	console.log("tops");
 	console.log(topPackages);
 	
@@ -215,8 +219,22 @@ function goTop()
 		if(cnt<10){
     		document.getElementById("dispTop").innerHTML+=val;
     		cnt++;
-		}
-}
-	
+            }
+    }*/
+    window.location="topPackages.html?";
+    var sortable = [];
+    for (var package in packageMap) {
+        sortable.push([package, packageMap[package]]);
+    }
+
+    sortable.sort(function(a, b) {
+        return b[1] - a[1];
+    });
+
+    console.log(sortable);
+    $('#myDiv').append("<ul id='newList'></ul>");
+    for (cnt = 0; cnt < 10; cnt++) {
+        $("#newList").append("<li>"+sortable[cnt]+"</li>");
+    }
 
 }
