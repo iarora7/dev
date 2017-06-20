@@ -1,5 +1,36 @@
 var topPackages = new Set();
 var packageMap = new Object();
+
+$(function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#status" ).autocomplete({
+      source: availableTags
+    });
+  } );
+
 function search(s)
 {
 		var output = document.getElementById('gitList');
